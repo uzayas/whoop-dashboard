@@ -1,0 +1,14 @@
+name = "whoop-proxy"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+[vars]
+# Client ID aus dem WHOOP Developer Dashboard
+WHOOP_CLIENT_ID = "DEINE_CLIENT_ID"
+# Genau die URL deines Dashboards (mit Schrägstrich am Ende) – muss auch bei WHOOP als Redirect URL eingetragen sein
+REDIRECT_URI = "https://DEIN-GITHUB-NAME.github.io/whoop-dashboard/"
+# Nur der Ursprung (ohne Pfad, ohne Schrägstrich)
+ALLOWED_ORIGIN = "https://DEIN-GITHUB-NAME.github.io"
+
+# Das Client Secret NICHT hier eintragen, sondern als Secret setzen:
+#   npx wrangler secret put WHOOP_CLIENT_SECRET
