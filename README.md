@@ -26,8 +26,11 @@ npm run dev
 
 ## 2. Auf GitHub Pages veröffentlichen (Demo)
 
-1. Neues Repository auf GitHub anlegen, z. B. `whoop-dashboard`.
-2. Code hochladen:
+1. Neues, **leeres** und **öffentliches (Public)** Repository auf GitHub anlegen, z. B. `whoop-dashboard` (ohne README, .gitignore oder Lizenz).
+   Im kostenlosen GitHub-Plan funktioniert Pages nur mit öffentlichen Repositories. Das ist hier unbedenklich: Im Code stehen keine Geheimnisse und keine WHOOP-Daten.
+2. Im Repository: **Settings → Pages → Build and deployment → Source: „GitHub Actions“**.
+   Das muss vor dem ersten Push passieren, sonst schlägt das erste Deployment fehl.
+3. Code hochladen – entweder per Terminal **oder** per Web-Upload, nicht beides:
    ```bash
    git init
    git add .
@@ -36,11 +39,23 @@ npm run dev
    git remote add origin https://github.com/DEIN-NAME/whoop-dashboard.git
    git push -u origin main
    ```
-3. Im Repository: **Settings → Pages → Build and deployment → Source: „GitHub Actions“**.
+   Beim Web-Upload fehlt oft der versteckte Ordner `.github` (macOS und Windows blenden ihn aus). Ohne ihn läuft kein Build.
 4. Unter **Actions** läuft der Workflow „Deploy to GitHub Pages“. Danach ist die App erreichbar unter
    `https://DEIN-NAME.github.io/whoop-dashboard/`.
 
 Damit hast du den ersten Test online – noch mit Demo-Daten.
+
+### Wenn das Deployment fehlschlägt
+
+Öffne **Actions**, klicke den roten Lauf an und dann den roten Job (`build` oder `deploy`). Die Fehlermeldung steht in den letzten Zeilen.
+
+| Meldung | Lösung |
+|---|---|
+| `Get Pages site failed`, `Not Found` oder `Failed to create deployment (status: 404)` | Pages-Source auf „GitHub Actions“ stellen (Schritt 2), dann im Lauf **Re-run all jobs**. |
+| `Branch "main" is not allowed to deploy to github-pages due to environment protection rules` | **Settings → Environments → github-pages → Deployment branches** den Branch `main` erlauben, dann **Re-run all jobs**. |
+| Fehlgeschlagener Lauf heisst „pages build and deployment“ | Pages steht noch auf „Deploy from a branch“. Auf „GitHub Actions“ umstellen. |
+| Kein Lauf „Deploy to GitHub Pages“ sichtbar | Der Ordner `.github/workflows` fehlt im Repository. Per Terminal pushen (Schritt 3). |
+| `git push` meldet `rejected` / `fetch first` | Das Repository hat schon Commits (z. B. vom Web-Upload). Einmalig `git push -u origin main --force` ausführen. |
 
 ---
 
